@@ -7,6 +7,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 use Detail\Bernard\Options\ModuleOptions;
 
+use RuntimeException;
+
 class ModuleOptionsFactory implements FactoryInterface
 {
     /**
@@ -15,6 +17,12 @@ class ModuleOptionsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new ModuleOptions($serviceLocator->get('Config')['bernard']); /** @todo Check for existence */
+        $config = $serviceLocator->get('Config');
+
+        if (!isset($config['bernard'])) {
+            throw new RuntimeException('Config for Bernard is not set');
+        }
+
+        return new ModuleOptions($config['bernard']);
     }
 }
