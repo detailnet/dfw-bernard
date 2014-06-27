@@ -14,6 +14,8 @@ class ModuleOptions extends AbstractOptions
 
     protected $directory = null;
 
+    protected $receivers = array();
+
     /**
      * @param null $directory
      */
@@ -92,5 +94,21 @@ class ModuleOptions extends AbstractOptions
     public function getSerializer()
     {
         return $this->serializer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReceivers()
+    {
+        return $this->receivers;
+    }
+
+    /**
+     * @param array $receivers
+     */
+    public function setReceivers($receivers)
+    {
+        $this->receivers = $receivers;
     }
 }

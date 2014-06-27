@@ -4,10 +4,18 @@ namespace Bernard;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+
+use Zend\Console\Adapter\AdapterInterface as Console;
 
 class Module implements
     AutoloaderProviderInterface,
-    ConfigProviderInterface
+    ConfigProviderInterface,
+    ConsoleUsageProviderInterface,
+    ControllerProviderInterface,
+    ServiceProviderInterface
 {
     const NAME = 'Bernard';
 
@@ -36,5 +44,25 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/../../config/module.config.php';
+    }
+
+    public function getConsoleUsage(Console $console)
+    {
+        return array(
+            'Actions:',
+            'bernard consume [--verbose|-v] <queue>' => 'Consume queue',
+            array('<queue>',      'The name of the queue to consume'),
+            array('--verbose|-v', '(optional) Turn on verbose mode'),
+        );
+    }
+
+    public function getControllerConfig()
+    {
+        return array();
+    }
+
+    public function getServiceConfig()
+    {
+        return array();
     }
 }
