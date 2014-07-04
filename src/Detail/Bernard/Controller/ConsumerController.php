@@ -10,7 +10,7 @@ use Zend\Console\ColorInterface as ConsoleColor;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LogLevel;
 
-use Application\Log\LoggerAwareTrait;
+use Detail\Log\Service\LoggerAwareTrait;
 
 use RuntimeException;
 
@@ -21,12 +21,48 @@ class ConsumerController extends AbstractActionController implements LoggerAware
 {
     use LoggerAwareTrait;
 
-    protected $consumer = null;
+    const OPTION_MAX_RUNTIME = 'max_runtime';
 
     /**
-     * @var
+     * @var \Bernard\Consumer
      */
-    protected $queues = null;
+    protected $consumer;
+
+    /**
+     * @var array
+     * @todo Make configurable
+     */
+    protected $consumerOptions = array(
+        self::OPTION_MAX_RUNTIME => 10
+    );
+
+    /**
+     * @var QueueFactory
+     */
+    protected $queues;
+
+    public function getConsumerOption($name, $default = null)
+    {
+        $options = $this->getConsumerOptions();
+
+        return array_key_exists($name, $options) ? $options[$name] : $default;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConsumerOptions()
+    {
+        return $this->consumerOptions;
+    }
+
+    /**
+     * @param array $consumerOptions
+     */
+    public function setConsumerOptions(array $consumerOptions)
+    {
+        $this->consumerOptions = $consumerOptions;
+    }
 
     public function __construct(Consumer $consumer, QueueFactory $queues)
     {
@@ -59,21 +95,28 @@ class ConsumerController extends AbstractActionController implements LoggerAware
         $queueName = $request->getParam('queue');
         $isVerbose = $request->getParam('verbose', false) || $request->getParam('v', false);
 
+        $this->log(
+            sprintf('Started consuming messages in queue "%s"', $queueName), LogLevel::INFO
+        );
+
         if ($isVerbose) {
             $console->writeLine(
                 sprintf('Consuming messages in queue "%s"', $queueName), ConsoleColor::LIGHT_BLUE
             );
         }
 
-        /** @todo Log processing of each message when verbose */
+        /** @todo Output processing of each message when verbose */
 
         $consumer = $this->getConsumer();
         $consumer->consume(
             $this->getQueues()->create($queueName),
             array(
-                /** @todo Make configurable */
-                'max-runtime' => 10,
+                'max-runtime' => $this->getConsumerOption(self::OPTION_MAX_RUNTIME)
             )
+        );
+
+        $this->log(
+            sprintf('Ended consuming messages in queue "%s"', $queueName), LogLevel::NOTICE
         );
     }
 
