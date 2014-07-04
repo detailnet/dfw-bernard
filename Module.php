@@ -4,10 +4,19 @@ namespace Detail\Bernard;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
+use Zend\ModuleManager\Feature\ControllerProviderInterface;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+
+use Zend\Console\Adapter\AdapterInterface as Console;
+use Zend\Console\ColorInterface as Color;
 
 class Module implements
     AutoloaderProviderInterface,
-    ConfigProviderInterface
+    ConfigProviderInterface,
+    ConsoleUsageProviderInterface,
+    ControllerProviderInterface,
+    ServiceProviderInterface
 {
     /**
      * {@inheritdoc}
@@ -32,5 +41,29 @@ class Module implements
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getConsoleUsage(Console $console)
+    {
+        return array(
+            'Actions:',
+            'bernard consume [--verbose|-v] <queue>' => 'Consume queue',
+            array(
+                '<queue>',
+                'The name of the queue to consume. Supported are:' . PHP_EOL .
+                $console->colorize('mail', Color::YELLOW) . '    Send queued mails'
+            ),
+            array('--verbose|-v', '(optional) Turn on verbose mode'),
+        );
+    }
+
+    public function getControllerConfig()
+    {
+        return array();
+    }
+
+    public function getServiceConfig()
+    {
+        return array();
     }
 }
