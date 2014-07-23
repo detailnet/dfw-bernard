@@ -2,6 +2,8 @@
 
 namespace Detail\Bernard\Options;
 
+use Detail\Core\Options\AbstractOptions;
+
 class ModuleOptions extends AbstractOptions
 {
     protected $driver = 'Bernard\Driver\FlatFileDriver';
