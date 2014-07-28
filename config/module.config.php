@@ -54,7 +54,7 @@ return array(
         'serializer' => 'Bernard\Serializer\SimpleSerializer',
         'queue'      => 'Bernard\Queue\InMemoryQueue',
         'prefetch'   => null,
-        'directory'  => __DIR__ . '/../../../data/queues',
+        'directory'  => __DIR__ . '/../../../../data/queues',
         'services'   => array(),
     ),
 );
