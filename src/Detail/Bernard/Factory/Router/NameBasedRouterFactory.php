@@ -4,9 +4,9 @@ namespace Detail\Bernard\Factory\Router;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-use Bernard\Router\SimpleRouter;
+use Detail\Bernard\Router\NameBasedRouter;
 
-class SimpleRouterFactory extends AbstractRouterFactory
+class NameBasedRouterFactory extends AbstractRouterFactory
 {
     /**
      * {@inheritDoc}
@@ -14,7 +14,7 @@ class SimpleRouterFactory extends AbstractRouterFactory
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $receivers = $this->getReceivers($serviceLocator);
-        $router = new SimpleRouter($receivers);
+        $router = new NameBasedRouter($receivers);
 
         return $router;
     }

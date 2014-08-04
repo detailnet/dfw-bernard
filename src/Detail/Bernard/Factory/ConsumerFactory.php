@@ -14,8 +14,8 @@ class ConsumerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var \Bernard\Router\SimpleRouter $router */
-        $router = $serviceLocator->get('Bernard\Router\SimpleRouter');
+        /** @var \Bernard\Router $router */
+        $router = $serviceLocator->get('Detail\Bernard\Router\NameBasedRouter');
 
         /** @var \Bernard\Middleware\MiddlewareBuilder $middleware */
         $middleware = $serviceLocator->get('Bernard\Middleware\MiddlewareBuilder');

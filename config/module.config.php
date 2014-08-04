@@ -3,6 +3,7 @@
 return array(
     'service_manager' => array(
         'abstract_factories' => array(
+            'Detail\Bernard\Factory\Message\MessengerAbstractFactory',
         ),
         'aliases' => array(
         ),
@@ -12,14 +13,15 @@ return array(
             /** @todo Add support for JMSSerializer and SymfonySerializer */
         ),
         'factories' => array(
-            'Detail\Bernard\Options\ModuleOptions' => 'Detail\Bernard\Factory\ModuleOptionsFactory',
-            'Bernard\Driver\FlatFileDriver'        => 'Detail\Bernard\Factory\Driver\FlatFileDriverFactory',
-            'Bernard\Driver\IronMqDriver'          => 'Detail\Bernard\Factory\Driver\IronMqDriverFactory',
-            'Bernard\Queue\InMemoryQueue'          => 'Detail\Bernard\Factory\Queue\InMemoryQueueFactory',
-            'Bernard\Queue\PersistentQueue'        => 'Detail\Bernard\Factory\Queue\PersistentQueueFactory',
-            'Bernard\Router\SimpleRouter'          => 'Detail\Bernard\Factory\Router\SimpleRouterFactory',
-            'Bernard\Consumer'                     => 'Detail\Bernard\Factory\ConsumerFactory',
-            'Bernard\Producer'                     => 'Detail\Bernard\Factory\ProducerFactory',
+            'Detail\Bernard\Options\ModuleOptions'  => 'Detail\Bernard\Factory\ModuleOptionsFactory',
+            'Detail\Bernard\Router\NameBasedRouter' => 'Detail\Bernard\Factory\Router\NameBasedRouterFactory',
+            'Bernard\Driver\FlatFileDriver'         => 'Detail\Bernard\Factory\Driver\FlatFileDriverFactory',
+            'Bernard\Driver\IronMqDriver'           => 'Detail\Bernard\Factory\Driver\IronMqDriverFactory',
+            'Bernard\Queue\InMemoryQueue'           => 'Detail\Bernard\Factory\Queue\InMemoryQueueFactory',
+            'Bernard\Queue\PersistentQueue'         => 'Detail\Bernard\Factory\Queue\PersistentQueueFactory',
+            'Bernard\Router\SimpleRouter'           => 'Detail\Bernard\Factory\Router\SimpleRouterFactory',
+            'Bernard\Consumer'                      => 'Detail\Bernard\Factory\ConsumerFactory',
+            'Bernard\Producer'                      => 'Detail\Bernard\Factory\ProducerFactory',
         ),
         'initializers' => array(
         ),

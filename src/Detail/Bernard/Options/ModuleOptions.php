@@ -18,6 +18,8 @@ class ModuleOptions extends AbstractOptions
 
     protected $receivers = array();
 
+    protected $messengers = array();
+
     /**
      * @param null $directory
      */
@@ -112,5 +114,21 @@ class ModuleOptions extends AbstractOptions
     public function setReceivers($receivers)
     {
         $this->receivers = $receivers;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMessengers()
+    {
+        return $this->messengers;
+    }
+
+    /**
+     * @param array $messengers
+     */
+    public function setMessengers(array $messengers)
+    {
+        $this->messengers = $messengers;
     }
 }
