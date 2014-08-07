@@ -7,7 +7,7 @@ interface MessageFactoryInterface
     /**
      * Does the factory accept the provided message?
      *
-     * @param $message
+     * @param mixed $message
      * @return boolean
      */
     public function accepts($message);
