@@ -33,7 +33,7 @@ class ConsumerController extends AbstractActionController implements LoggerAware
      * @todo Make configurable
      */
     protected $consumerOptions = array(
-        self::OPTION_MAX_RUNTIME => 10
+//        self::OPTION_MAX_RUNTIME => 10
     );
 
     /**
@@ -45,7 +45,15 @@ class ConsumerController extends AbstractActionController implements LoggerAware
     {
         $options = $this->getConsumerOptions();
 
-        return array_key_exists($name, $options) ? $options[$name] : $default;
+        /** @var ConsoleRequest $request */
+        $request = $this->getRequest();
+        $value = $request->getParam($name);
+
+        if ($value === null) {
+            $value = array_key_exists($name, $options) ? $options[$name] : $default;
+        }
+
+        return $value;
     }
 
     /**
@@ -107,13 +115,15 @@ class ConsumerController extends AbstractActionController implements LoggerAware
 
         /** @todo Output processing of each message when verbose */
 
+        $consumerOptions = array();
+        $maxRuntime = $this->getConsumerOption(self::OPTION_MAX_RUNTIME);
+
+        if ($maxRuntime !== null) {
+            $consumerOptions['max-runtime'] = (int) $maxRuntime;
+        }
+
         $consumer = $this->getConsumer();
-        $consumer->consume(
-            $this->getQueues()->create($queueName),
-            array(
-                'max-runtime' => $this->getConsumerOption(self::OPTION_MAX_RUNTIME)
-            )
-        );
+        $consumer->consume($this->getQueues()->create($queueName), $consumerOptions);
 
         $this->log(
             sprintf('Ended consuming messages in queue "%s"', $queueName), LogLevel::NOTICE

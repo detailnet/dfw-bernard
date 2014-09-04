@@ -41,7 +41,7 @@ return array(
             'routes' => array(
                 'bernard-consume' => array(
                     'options' => array(
-                        'route'    => 'bernard consume [--verbose|-v] <queue>',
+                        'route'    => 'bernard consume [--max_runtime=] [--verbose|-v] <queue>',
                         'defaults' => array(
                             'controller' => 'Detail\Bernard\Controller\Consumer',
                             'action'     => 'consume',

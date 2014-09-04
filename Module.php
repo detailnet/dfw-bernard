@@ -47,13 +47,10 @@ class Module implements
     {
         return array(
             'Actions:',
-            'bernard consume [--verbose|-v] <queue>' => 'Consume queue',
-            array(
-                '<queue>',
-                'The name of the queue to consume. Supported are:' . PHP_EOL .
-                $console->colorize('mail', Color::YELLOW) . '    Send queued mails'
-            ),
-            array('--verbose|-v', '(optional) Turn on verbose mode'),
+            'bernard consume [--max_runtime=] [--verbose|-v] <queue>' => 'Consume queue',
+            array('<queue>',          'The name of the queue to consume'),
+            array('--max_runtime', '(optional) Maximum runtime in seconds'),
+            array('--verbose|-v',     '(optional) Turn on verbose mode'),
         );
     }
 
