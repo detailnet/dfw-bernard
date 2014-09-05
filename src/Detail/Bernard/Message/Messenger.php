@@ -2,6 +2,8 @@
 
 namespace Detail\Bernard\Message;
 
+use Detail\Bernard\Driver\DriverManager;
+
 use Bernard\Message as BernardMessage;
 use Bernard\Message\DefaultMessage as BernardDefaultMessage;
 use Bernard\Producer;
@@ -22,6 +24,16 @@ class Messenger
      * @var MessageFactoryInterface
      */
     protected $messageFactory;
+
+    /**
+     * @var DriverManager
+     */
+    protected $driverManager;
+
+    /**
+     * @var array
+     */
+    protected $messageCount = array();
 
     /**
      * @return Producer
@@ -55,19 +67,60 @@ class Messenger
         $this->messageFactory = $messageFactory;
     }
 
-    public function __construct(Producer $producer, MessageFactoryInterface $messageFactory)
+    /**
+     * @return DriverManager
+     */
+    public function getDriverManager()
+    {
+        return $this->driverManager;
+    }
+
+    /**
+     * @param DriverManager $driverManager
+     */
+    public function setDriverManager(DriverManager $driverManager)
+    {
+        $this->driverManager = $driverManager;
+    }
+
+    /**
+     * @param string $queue
+     * @return array|int
+     */
+    public function getMessageCount($queue = null)
+    {
+        $messageCount = $this->messageCount;
+
+        if ($queue !== null) {
+            $messageCount = isset($messageCount[$queue]) ? $messageCount[$queue] : 0;
+        }
+
+        return $messageCount;
+    }
+
+    public function __construct(Producer $producer, MessageFactoryInterface $messageFactory, DriverManager $driverManager)
     {
         $this->setProducer($producer);
         $this->setMessageFactory($messageFactory);
+        $this->setDriverManager($driverManager);
     }
 
     /**
      * @param BernardMessage $message Message
+     * @param array $queueOptions
      */
-    public function produce(BernardMessage $message)
+    public function produce(BernardMessage $message, array $queueOptions = array())
     {
+        $queue = $message->getName();
+
+        if (!empty($queueOptions) && $this->getMessageCount($queue) === 0) {
+            /** @todo Make sure queue exists and is configured properly (apply provided options) */
+            $this->getDriverManager()->configureQueue($queue, $queueOptions);
+        }
+
         // Pushes the message to the queue
-        $this->getProducer()->produce($message);
+        $this->getProducer()->produce($message, $queue); // This will create the queue (on the first call only)
+        $this->incrementMessageCount($queue);
     }
 
     /**
@@ -134,5 +187,18 @@ class Messenger
             $message->{self::MESSAGE_KEY},
             $message->{self::MESSAGE_CLASS_KEY}
         );
+    }
+
+    /**
+     * @param string $queue
+     * @param int $value
+     * @return int
+     */
+    protected function incrementMessageCount($queue, $value = 1)
+    {
+        $this->messageCount[$queue]
+            = isset($this->messageCount[$queue]) ? $this->messageCount[$queue] + $value : $value;
+
+        return $this->messageCount[$queue];
     }
 }

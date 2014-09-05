@@ -5,7 +5,7 @@ namespace Detail\Bernard\Factory\Driver;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-use Bernard\Driver\IronMqDriver;
+use Detail\Bernard\Driver\IronMqDriver;
 
 class IronMqDriverFactory implements FactoryInterface
 {

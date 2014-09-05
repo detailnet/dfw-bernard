@@ -31,17 +31,22 @@ class MessengerAbstractFactory implements AbstractFactoryInterface
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $messengers = $this->getOptions($serviceLocator)->getMessengers();
-        $options = new MessengerOptions($messengers[$requestedName]);
+        $moduleOptions = $this->getOptions($serviceLocator);
+
+        $messengers = $moduleOptions->getMessengers();
+        $messengerOptions = new MessengerOptions($messengers[$requestedName]);
+
+        /** @var \Bernard\Producer $producer */
+        $producer = $serviceLocator->get($messengerOptions->getProducer());
 
         // Note that each the MessageFactory is (most likely) not shared (new instance returned on each SL call)
         /** @var \Detail\Bernard\Message\MessageFactoryInterface $messageFactory */
-        $messageFactory = $serviceLocator->get($options->getMessageFactory());
+        $messageFactory = $serviceLocator->get($messengerOptions->getMessageFactory());
 
-        /** @var \Bernard\Producer $producer */
-        $producer = $serviceLocator->get($options->getProducer());
+        /** @var \Detail\Bernard\Driver\DriverManager $driverManager */
+        $driverManager = $serviceLocator->get('Detail\Bernard\Driver\DriverManager');
 
-        $messenger = new Messenger($producer, $messageFactory);
+        $messenger = new Messenger($producer, $messageFactory, $driverManager);
 
         return $messenger;
     }
