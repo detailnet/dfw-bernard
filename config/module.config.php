@@ -56,7 +56,7 @@ return array(
     'bernard' => array(
         'driver'     => 'Bernard\Driver\FlatFileDriver',
         'serializer' => 'Bernard\Serializer\SimpleSerializer',
-        'queue'      => 'Bernard\Queue\InMemoryQueue',
+        'queue'      => 'Bernard\Queue\PersistentQueue',
         'prefetch'   => null,
         'directory'  => __DIR__ . '/../../../../data/queues',
         'services'   => array(),
