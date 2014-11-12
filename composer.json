@@ -20,6 +20,8 @@
         "psr/log": "~1.0",
         "bernard/bernard": "0.12.*",
         "zendframework/zend-console": "2.*",
+        "zendframework/zend-loader": "2.*",
+        "zendframework/zend-modulemanager": "2.*",
         "zendframework/zend-mvc": "2.*",
         "zendframework/zend-servicemanager": "2.*"
     },
