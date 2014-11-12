@@ -10,7 +10,7 @@ use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
-use Zend\Console\ColorInterface as Color;
+//use Zend\Console\ColorInterface as Color;
 
 class Module implements
     AutoloaderProviderInterface,
