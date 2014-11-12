@@ -1,0 +1,28 @@
+{
+    "name": "detailnet/bernard-module",
+    "description": "Bernard Module for Zend Framework 2",
+    "type": "library",
+    "keywords": [
+        "bernard",
+        "module",
+        "zf2"
+    ],
+    "homepage": "https://github.com/detailnet/bernard-module/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ivan Wolf",
+            "email": "ivan.wolf@detailnet.ch"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "bernard/bernard": "0.12.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Detail\\Bernard\\": "src/",
+            "DetailTest\\Bernard\\": "tests/"
+        }
+    }
+}
