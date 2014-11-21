@@ -1,13 +1,13 @@
 {
-    "name": "detailnet/bernard-module",
-    "description": "Bernard Module for Zend Framework 2",
+    "name": "detailnet/bernard",
+    "description": "DETAIL Framework library extending the features of Bernard",
     "type": "library",
     "keywords": [
-        "bernard",
-        "module",
-        "zf2"
+        "dfw",
+        "detailnet",
+        "bernard"
     ],
-    "homepage": "https://github.com/detailnet/bernard-module/",
+    "homepage": "https://github.com/detailnet/dfw-bernard/",
     "license": "MIT",
     "authors": [
         {
@@ -17,22 +17,12 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "psr/log": "~1.0",
         "bernard/bernard": "0.12.*",
-        "zendframework/zend-console": "2.*",
-        "zendframework/zend-loader": "2.*",
-        "zendframework/zend-modulemanager": "2.*",
-        "zendframework/zend-mvc": "2.*",
-        "zendframework/zend-servicemanager": "2.*",
-        "detailnet/dfw-core": "dev-master",
         "detailnet/dfw-log": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.3.5",
         "iron-io/iron_mq": "~1.5"
-    },
-    "suggest": {
-        "iron-io/iron_mq": "For usage with the IronMQ driver"
     },
     "autoload": {
         "psr-0": {
