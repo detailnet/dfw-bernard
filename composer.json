@@ -16,9 +16,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4.0",
         "bernard/bernard": "0.12.*",
-        "detailnet/dfw-log": "dev-master"
+        "detailnet/dfw-log": "~0.1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.3.5",
@@ -26,13 +26,17 @@
     },
     "autoload": {
         "psr-0": {
-            "Detail\\Bernard\\": "src/",
+            "Detail\\Bernard\\": "src/"
+        }
+    },
+	"autoload-dev": {
+        "psr-0": {
             "DetailTest\\Bernard\\": "tests/"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "1.x-dev"
         }
     },
     "archive": {
