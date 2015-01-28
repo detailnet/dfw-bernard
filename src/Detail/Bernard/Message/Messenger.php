@@ -3,12 +3,11 @@
 namespace Detail\Bernard\Message;
 
 use Detail\Bernard\Driver\DriverManager;
+use Detail\Bernard\Exception;
 
 use Bernard\Message as BernardMessage;
 use Bernard\Message\DefaultMessage as BernardDefaultMessage;
 use Bernard\Producer;
-
-use RuntimeException;
 
 class Messenger
 {
@@ -128,7 +127,7 @@ class Messenger
      *
      * @param mixed $message
      * @param string $queue
-     * @throws RuntimeException
+     * @throws Exception\RuntimeException
      * @return BernardDefaultMessage
      */
     public function encodeMessage($message, $queue)
@@ -136,7 +135,7 @@ class Messenger
         $messageFactory = $this->getMessageFactory();
 
         if (!$this->messageFactory->accepts($message)) {
-            throw new RuntimeException(
+            throw new Exception\RuntimeException(
                 sprintf(
                     '%s does not accept message of type "%s"',
                     get_class($messageFactory),
@@ -159,26 +158,30 @@ class Messenger
      *
      * @param BernardMessage $message
      * @return mixed
-     * @throws RuntimeException
+     * @throws Exception\RuntimeException
      */
     public function decodeMessage(BernardMessage $message)
     {
         if (!isset($message->{self::MESSAGE_CLASS_KEY})) {
-            throw new RuntimeException(sprintf('Message is missing key "%s"', self::MESSAGE_CLASS_KEY));
+            throw new Exception\RuntimeException(
+                sprintf('Message is missing key "%s"', self::MESSAGE_CLASS_KEY)
+            );
         }
 
         if (!is_string($message->{self::MESSAGE_CLASS_KEY})) {
-            throw new RuntimeException(
+            throw new Exception\RuntimeException(
                 sprintf('Message has invalid value for key "%s"; must be a string', self::MESSAGE_CLASS_KEY)
             );
         }
 
         if (!isset($message->{self::MESSAGE_KEY})) {
-            throw new RuntimeException(sprintf('Message is missing key "%s"', self::MESSAGE_KEY));
+            throw new Exception\RuntimeException(
+                sprintf('Message is missing key "%s"', self::MESSAGE_KEY)
+            );
         }
 
         if (!is_array($message->{self::MESSAGE_KEY})) {
-            throw new RuntimeException(
+            throw new Exception\RuntimeException(
                 sprintf('Message has invalid value for key "%s"; must be an array', self::MESSAGE_KEY)
             );
         }
