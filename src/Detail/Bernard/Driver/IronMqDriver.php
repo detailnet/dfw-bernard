@@ -4,8 +4,8 @@ namespace Detail\Bernard\Driver;
 
 use Bernard\Driver\IronMqDriver as BernardIronMqDriver;
 
-class IronMqDriver extends BernardIronMqDriver
-    implements ConfigurableQueueDriverInterface
+class IronMqDriver extends BernardIronMqDriver implements
+    ConfigurableQueueDriverInterface
 {
     public function configureQueue($name, array $options = array())
     {

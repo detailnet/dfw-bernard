@@ -7,4 +7,4 @@ use Bernard\Message;
 interface ReceiverInterface
 {
     public function receive(Message $message);
-} 
+}

@@ -28,4 +28,4 @@ interface MessageFactoryInterface
      * @return array
      */
     public function toArray($message);
-} 
+}

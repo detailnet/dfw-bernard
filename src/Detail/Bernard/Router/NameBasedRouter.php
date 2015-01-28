@@ -30,4 +30,4 @@ class NameBasedRouter extends SimpleRouter
     {
         return $receiver instanceof ReceiverInterface;
     }
-} 
+}
